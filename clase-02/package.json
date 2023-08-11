@@ -1,0 +1,17 @@
+{
+  "name": "clase-02",
+  "version": "1.0.0",
+  "description": "- 100 - 199 -> Respuestas informativas\r - 200 - 299 -> Respuestas satisfactorias\r - 300 - 399 -> Redirecciones\r - 400 - 499 -> Errores del cliente\r - 500 - 599 -> Errores del servidor",
+  "main": "01-http.js",
+  "scripts": {
+    "dev:http": "node 01-http.js",
+    "dev:routing": "node 02-routing.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
