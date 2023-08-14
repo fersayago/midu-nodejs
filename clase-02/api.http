@@ -3,7 +3,7 @@ GET http://localhost:1234/pokemon/pikachu
 
 ### Para crear un pokemon
 POST http://localhost:1234/pokemon
-Content-Content-Type: application/json
+Content-Type: application/json
 
 {
   "name": "ditto",
