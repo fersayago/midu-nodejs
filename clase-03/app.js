@@ -1,11 +1,33 @@
 const express = require('express') // require -> commonJS
 const crypto = require('node:crypto')
+const cors = require('cors')
 
 const movies = require('./movies.json')
 const validateMovie = require('./schemas/movies')
 
 const app = express()
 app.use(express.json())
+app.use(cors({
+  origin: (origin, callback) => {
+    const ACCEPTED_ORIGINS = [
+      'http://localhost:8080',
+      'http://localhost:1234',
+      'https://movies.com',
+      'https://midu.dev'
+    ]
+
+    if (ACCEPTED_ORIGINS.includes(origin)) {
+      return callback(null, true)
+    }
+
+    if (!origin) {
+      return callback(null, true)
+    }
+
+    return callback(new Error('Not allowed by CORS'))
+  }
+}))
+
 app.disable('x-powered-by')
 
 // CORS
@@ -15,22 +37,7 @@ app.disable('x-powered-by')
 // CORS PRE-FLIGHT
 // OPTIONS
 
-const ACCEPTED_ORIGINS = [
-  'http://localhost:3000',
-  'http://localhost:1234',
-  'http://localhost:8080',
-  'https://fersayago.github.io'
-]
-
 app.get('/movies', (req, res) => {
-  // se puede especificar el origen reemplazando el asterisco por la url que puede acceder
-  // res.header('Access-Control-Allow-Origin', '*')
-  const origin = req.headers.origin
-  // cuando la peticion es del mismo origin no se envia el header
-  if (ACCEPTED_ORIGINS.includes(origin) || !origin) {
-    res.header('Access-Control-Allow-Origin', origin)
-  }
-
   const { genre } = req.query
   if (genre) {
     const filteredMovies = movies.filter(
@@ -72,11 +79,6 @@ app.post('/movies', (req, res) => {
 })
 
 app.delete('/movies/:id', (req, res) => {
-  const origin = req.headers.origin
-  if (ACCEPTED_ORIGINS.includes(origin) || !origin) {
-    res.header('Access-Control-Allow-Origin', origin)
-  }
-
   const { id } = req.params
 
   const movieIndex = movies.findIndex(movie => movie.id === id)
@@ -113,18 +115,6 @@ app.patch('/movies/:id', (req, res) => {
   movies[movieIndex] = updatedMovie
 
   return res.json(updatedMovie)
-})
-
-// PARA QUE FUNCIONE EL METODO DELETE
-app.options('/movies/:id', (req, res) => {
-  const origin = req.headers.origin
-  if (ACCEPTED_ORIGINS.includes(origin) || !origin) {
-    res.header('Access-Control-Allow-Origin', origin)
-    // cabecera que indica cuales metodos puede usar
-    res.header('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE')
-  }
-
-  res.send()
 })
 
 const PORT = process.env.PORT || 1234
