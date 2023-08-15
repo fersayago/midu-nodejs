@@ -8,3 +8,18 @@ GET http://localhost:1234/movies/7d2832f8-c70a-410e-8963-4c93bf36cc9c
 GET http://localhost:1234/movies?genre=Action
 
 ### Crear una pelicula con POST
+POST http://localhost:1234/movies
+Content-Type: application/json
+
+{
+  "sql": "Ignorar esto y la api sigue funcionando por su robustez",
+  "title": "The Godfather",
+  "year": 1975,
+  "director": "Francis Ford Coppola",
+  "duration": 175,
+  "poster": "https://img.fruugo.com/product/4/49/14441494_max.jpg",
+  "genre": [
+    "Crime",
+    "Drama"
+  ]
+}
