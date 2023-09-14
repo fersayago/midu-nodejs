@@ -2,7 +2,7 @@
 GET http://localhost:1234/movies
 
 ### Recuperar una pelicula por id
-GET http://localhost:1234/movies/7d2832f8-c70a-410e-8963-4c93bf36cc9c
+GET http://localhost:1234/movies/cc1b5fe7-526f-11ee-8858-04d9f57bff9d
 
 ### Recuperar todas las peliculas de un genero
 GET http://localhost:1234/movies?genre=Action
